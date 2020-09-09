@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://bossanova.uk/jexcel/v4/jexcel.js"></script>
+    <link rel="stylesheet" href="https://bossanova.uk/jexcel/v4/jexcel.css" type="text/css" />
+
+    <script src="https://bossanova.uk/jsuites/v3/jsuites.js"></script>
+    <link rel="stylesheet" href="https://bossanova.uk/jsuites/v3/jsuites.css" type="text/css" />
+</head>
+
+<body>
+    <div style="text-align:center">
+        <h2> Impact Analysis Tool</h2>
+    </div>
+    <hr style="border:medium;border-width:3px;width:100%" />
+    <table style="height:30%;width:100%">
+        <tr style="width:80%">
+            <td>
+                <label>Aras URL</label>
+            </td>
+            <td>
+                <input type="text" id="iArasUrl" placeholder="Aras Innovator Server URL" style="width:80%" />
+            </td>
+        </tr>
+        <tr style="width:100%">
+            <td>
+                <label>Aras Database</label>
+            </td>
+            <td>
+                <input type="text" id="iArasDatabase" placeholder="Aras Innovator - Database" style="width:80%" />
+            </td>
+        </tr>
+        <tr style="width:100%">
+            <td>
+                <label>Aras User Name</label>
+            </td>
+            <td>
+                <input type="text" id="iArasName" placeholder="Aras Innovator Login Id" style="width:80%" />
+            </td>
+        </tr>
+        <tr style="width:100%">
+            <td>
+                <label>Aras Password</label>
+            </td>
+            <td>
+                <input type="text" id="iArasPassword" placeholder="Aras Innovator - Password" style="width:80%" />
+            </td>
+        </tr>
+        <tr style="width:100%">
+            <td>
+                <label>Method Name</label>
+            </td>
+            <td>
+                <input type="text" id="iArasMethod" placeholder="Aras Innovator - Method" style="width:80%" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button id="btnPIA" onclick="userAction()"> Perform Impact Analysis </button >
+            </td>
+        </tr>
+    </table>
+
+    <div id="spreadsheet"></div>
+
+    <script>
+
+
+        function userAction() {
+            debugger;
+            var http = new XMLHttpRequest();
+            var url = 'http://server/ApplicationMaintanceTool/api/Get';
+            http.open("GET", url);
+            http.send();
+            http.onreadystatechange=(e)=> {
+                alert(http.responseText);
+            }
+        }
+
+
+        var data = [
+            ['Jazz', 'Honda', '2019-02-12', '', true, '$ 2.000,00', '#777700'],
+            ['Civic', 'Honda', '2018-07-11', '', true, '$ 4.000,01', '#007777'],
+        ];
+
+        jexcel(document.getElementById('spreadsheet'), {
+            data: data,
+            columns: [
+                {
+                    type: 'text',
+                    title: 'Car',
+                    width: 90
+                },
+                {
+                    type: 'dropdown',
+                    title: 'Make',
+                    width: 120,
+                    source: [
+                        "Alfa Romeo",
+                        "Audi",
+                        "Bmw",
+                        "Chevrolet",
+                        "Chrystler",
+                        // (...)
+                    ]
+                },
+                {
+                    type: 'calendar',
+                    title: 'Available',
+                    width: 120
+                },
+                {
+                    type: 'image',
+                    title: 'Photo',
+                    width: 120
+                },
+                {
+                    type: 'checkbox',
+                    title: 'Stock',
+                    width: 80
+                },
+                {
+                    type: 'numeric',
+                    title: 'Price',
+                    mask: '$ #.##,00',
+                    width: 80,
+                    decimal: ','
+                },
+                {
+                    type: 'color',
+                    width: 80,
+                    render: 'square',
+                },
+            ]
+        });
+    </script>
+
+</body>
+</html>
